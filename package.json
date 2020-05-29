@@ -45,11 +45,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devim-front/react-sentry.git"
+    "url": "git+https://github.com/devim-front/service.git"
   },
   "bugs": {
-    "url": "https://github.com/devim-front/react-sentry/issues"
+    "url": "https://github.com/devim-front/service/issues"
   },
-  "homepage": "https://github.com/devim-front/react-sentry#readme",
+  "homepage": "https://github.com/devim-front/service#readme",
   "dependencies": {}
 }
