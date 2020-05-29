@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "npm run build && npm run docs && git add ./build",
+    "pre-push": "npm test"
+  }
+}
