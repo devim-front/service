@@ -7,6 +7,7 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
+  "types": "./build/index.d.ts",
   "scripts": {
     "build:drop": "rimraf build",
     "build:make": "tsc",
