@@ -1,6 +1,6 @@
 {
   "name": "@devim-front/service",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Содержит реализацию шаблона проектирования 'сервис' и его вариации.",
   "main": "index.js",
   "publishConfig": {
