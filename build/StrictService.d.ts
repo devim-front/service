@@ -1,14 +1,14 @@
-import { Service } from './Service';
+import { SingleService } from './SingleService';
 /**
- * Представляет строгий сервис. Строгий сервис, в отличии от ленивого, требует
- * обязательной инициализации перед попыткой к нему обратиться.
+ * Представляет строгий единичный сервис. Строгий сервис, в отличии от ленивого,
+ * требует обязательной инициализации перед попыткой к нему обратиться.
  */
-export declare class StrictService extends Service {
+export declare class StrictService extends SingleService {
     /**
      * Возвращает экземпляр сервиса. Если сервис ещё не был инициализирован
      * методом init, вызов get приведёт к ошибке.
      */
-    static get<T extends typeof Service>(this: T): InstanceType<T>;
+    static get<T extends typeof SingleService>(this: T): InstanceType<T>;
     /**
      * Инициализирует экземпляр сервиса. Аргументы, указанные при вызове, будут
      * переданы в конструктор класса. Если вызвать метод инициализации повторно с
@@ -20,7 +20,7 @@ export declare class StrictService extends Service {
      *
      * @param args Аргументы, которые будут переданы в конструктор.
      */
-    static init<T extends typeof StrictService>(...args: ConstructorParameters<T>): void;
+    static init(...args: any[]): void;
     /**
      * Аргументы, которые были переданы в конструктор сервиса.
      */

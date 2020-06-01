@@ -14,12 +14,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LazyService = void 0;
-var Service_1 = require("./Service");
+var SingleService_1 = require("./SingleService");
 /**
- * Представляет "ленивый" сервис. Ленивый сервис не требует инициализации.
- * Непосредственно экземпляр сервиса создаётся во время первого обращения к
- * нему через метод get. Соответственно, конструктор ленивого сервиса не
- * должен иметь параметров.
+ * Представляет "ленивый" единичный сервис. Ленивый сервис не требует
+ * инициализации. Непосредственно экземпляр сервиса создаётся во время первого
+ * обращения к нему через метод get. Соответственно, конструктор ленивого
+ * сервиса не должен иметь параметров.
  */
 var LazyService = /** @class */ (function (_super) {
     __extends(LazyService, _super);
@@ -46,5 +46,5 @@ var LazyService = /** @class */ (function (_super) {
         this.get();
     };
     return LazyService;
-}(Service_1.Service));
+}(SingleService_1.SingleService));
 exports.LazyService = LazyService;

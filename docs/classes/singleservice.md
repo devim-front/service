@@ -1,47 +1,49 @@
-[@devim-front/service](../README.md) › [LazyService](lazyservice.md)
+[@devim-front/service](../README.md) › [SingleService](singleservice.md)
 
-# Class: LazyService
+# Class: SingleService
 
-Представляет "ленивый" единичный сервис. Ленивый сервис не требует
-инициализации. Непосредственно экземпляр сервиса создаётся во время первого
-обращения к нему через метод get. Соответственно, конструктор ленивого
-сервиса не должен иметь параметров.
+Представляет единичный сервис или сервис-синглтон. Данный тип сервиса
+запрещает прямые вызовы метода dispose и создание экземпляров через
+оператор new, предоставляя взамен специальные статические методы delete и
+init.
 
 ## Hierarchy
 
-  ↳ [SingleService](singleservice.md)
+* [Service](service.md)
 
-  ↳ **LazyService**
+  ↳ **SingleService**
+
+  ↳ [LazyService](lazyservice.md)
+
+  ↳ [StrictService](strictservice.md)
 
 ## Index
 
 ### Constructors
 
-* [constructor](lazyservice.md#markdown-header-constructor)
+* [constructor](singleservice.md#markdown-header-constructor)
 
 ### Properties
 
-* [instance](lazyservice.md#markdown-header-static-protected-instance)
+* [instance](singleservice.md#markdown-header-static-protected-instance)
 
 ### Accessors
 
-* [isExists](lazyservice.md#markdown-header-static-protected-isexists)
+* [isExists](singleservice.md#markdown-header-static-protected-isexists)
 
 ### Methods
 
-* [dispose](lazyservice.md#markdown-header-dispose)
-* [create](lazyservice.md#markdown-header-static-protected-create)
-* [delete](lazyservice.md#markdown-header-static-delete)
-* [get](lazyservice.md#markdown-header-static-get)
-* [init](lazyservice.md#markdown-header-static-init)
+* [dispose](singleservice.md#markdown-header-dispose)
+* [create](singleservice.md#markdown-header-static-protected-create)
+* [delete](singleservice.md#markdown-header-static-delete)
+* [get](singleservice.md#markdown-header-static-get)
+* [init](singleservice.md#markdown-header-static-init)
 
 ## Constructors
 
 ### <a id="markdown-header-constructor" name="markdown-header-constructor"></a>  constructor
 
-\+ **new LazyService**(...`_args`: any[]): *[LazyService](lazyservice.md)*
-
-*Inherited from [SingleService](singleservice.md).[constructor](singleservice.md#markdown-header-constructor)*
+\+ **new SingleService**(...`_args`: any[]): *[SingleService](singleservice.md)*
 
 Создает экземпляр сервиса. Получить созданный экземпляр можно с помощью
 статического метода get, вызов конструктора напрямую приводит к ошибке.
@@ -52,15 +54,13 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `..._args` | any[] | Аргументы, полученные из метода create.  |
 
-**Returns:** *[LazyService](lazyservice.md)*
+**Returns:** *[SingleService](singleservice.md)*
 
 ## Properties
 
 ### <a id="markdown-header-static-protected-instance" name="markdown-header-static-protected-instance"></a> `Static` `Protected` instance
 
 ▪ **instance**: *any*
-
-*Inherited from [SingleService](singleservice.md).[instance](singleservice.md#markdown-header-static-protected-instance)*
 
 Экземпляр сервиса.
 
@@ -69,8 +69,6 @@ Name | Type | Description |
 ### <a id="markdown-header-static-protected-isexists" name="markdown-header-static-protected-isexists"></a> `Static` `Protected` isExists
 
 • **get isExists**(): *boolean*
-
-*Inherited from [SingleService](singleservice.md).[isExists](singleservice.md#markdown-header-static-protected-isexists)*
 
 Указывает, что экземпляр данного класса уже был создан.
 
@@ -81,8 +79,6 @@ Name | Type | Description |
 ### <a id="markdown-header-dispose" name="markdown-header-dispose"></a>  dispose
 
 ▸ **dispose**(): *void*
-
-*Inherited from [SingleService](singleservice.md).[dispose](singleservice.md#markdown-header-dispose)*
 
 *Overrides [Service](service.md).[dispose](service.md#markdown-header-dispose)*
 
@@ -98,8 +94,6 @@ ___
 ### <a id="markdown-header-static-protected-create" name="markdown-header-static-protected-create"></a> `Static` `Protected` create
 
 ▸ **create**<**T**>(...`args`: ConstructorParameters‹T›): *void*
-
-*Inherited from [SingleService](singleservice.md).[create](singleservice.md#markdown-header-static-protected-create)*
 
 Создает экземпляр сервиса и сохраняет его. Для создания экземпляра класса
 следует использовать именно его; вызов оператора new приводит к ошибке.
@@ -122,8 +116,6 @@ ___
 
 ▸ **delete**(): *void*
 
-*Inherited from [SingleService](singleservice.md).[delete](singleservice.md#markdown-header-static-delete)*
-
 Удаляет существующий экземпляр сервиса, освобождая все занятые им ресурсы.
 
 **Returns:** *void*
@@ -134,10 +126,9 @@ ___
 
 ▸ **get**<**T**>(`this`: T)
 
-*Overrides [SingleService](singleservice.md).[get](singleservice.md#markdown-header-static-get)*
-
-Возвращает экземпляр сервиса. Если экземпляр сервиса ещё не был создан,
-создаёт его.
+Возвращает экземпляр сервиса. Если на момент вызова этого метода сервис
+ещё не был инициализирован методом init (или уже удален через метод
+delete), будет выброшено исключение.
 
 **Type parameters:**
 
@@ -153,13 +144,16 @@ ___
 
 ### <a id="markdown-header-static-init" name="markdown-header-static-init"></a> `Static` init
 
-▸ **init**(): *void*
+▸ **init**(...`args`: any[]): *void*
 
-*Overrides [SingleService](singleservice.md).[init](singleservice.md#markdown-header-static-init)*
+Инициализирует экземпляр сервиса. Аргументы, указанные при вызове, будут
+переданы в конструктор класса. Повторный вызов init уничтожит предыдущий
+экземпляр вызовов delete и создаст новый.
 
-Инициализирует экземпляр сервиса. В случае с ленивым сервисом, метод
-просто создаёт экземпляр класса, если тот не был создан ранее. Повторные
-вызовы init его не пересоздают. Чтобы пересоздать экземпляр принудительно,
-используйте метод delete, а затем init.
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`...args` | any[] | Аргументы.  |
 
 **Returns:** *void*

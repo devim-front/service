@@ -8,13 +8,14 @@ describe('StrictService', () => {
     class CustomService extends StrictService {
       public isDisposed = false;
 
-      protected dispose() {
+      public dispose() {
+        super.dispose();
         this.isDisposed = true;
       }
     };
 
   describe('get', () => {
-    it('call on a pristine service throws correct error', () => {
+    it('call on a pristine service throws an error', () => {
       const service = makeService();
       assert.throws(
         () => service.get(),
@@ -22,13 +23,13 @@ describe('StrictService', () => {
       );
     });
 
-    it('call on initialized service works', () => {
+    it('call on an initialized service works', () => {
       const service = makeService();
       service.init();
       assert.doesNotThrow(() => service.get());
     });
 
-    it('twice calls give an equal results', () => {
+    it('two calls give an equal results', () => {
       const service = makeService();
       service.init();
       const valueA = service.get();
@@ -38,7 +39,7 @@ describe('StrictService', () => {
   });
 
   describe('init', () => {
-    it("call with same args doesn't creates a new instance", () => {
+    it("call with a same args doesn't creates a new instance", () => {
       const service = makeService();
       const args = ['foo'];
       service.init(...args);

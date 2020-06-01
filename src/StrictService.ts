@@ -1,16 +1,16 @@
 import { NotInitializedError } from './NotInitializedError';
-import { Service } from './Service';
+import { SingleService } from './SingleService';
 
 /**
- * Представляет строгий сервис. Строгий сервис, в отличии от ленивого, требует
- * обязательной инициализации перед попыткой к нему обратиться.
+ * Представляет строгий единичный сервис. Строгий сервис, в отличии от ленивого,
+ * требует обязательной инициализации перед попыткой к нему обратиться.
  */
-export class StrictService extends Service {
+export class StrictService extends SingleService {
   /**
    * Возвращает экземпляр сервиса. Если сервис ещё не был инициализирован
    * методом init, вызов get приведёт к ошибке.
    */
-  public static get<T extends typeof Service>(this: T) {
+  public static get<T extends typeof SingleService>(this: T) {
     if (this.isExists) {
       return this.instance as InstanceType<T>;
     }
@@ -29,9 +29,7 @@ export class StrictService extends Service {
    *
    * @param args Аргументы, которые будут переданы в конструктор.
    */
-  public static init<T extends typeof StrictService>(
-    ...args: ConstructorParameters<T>
-  ) {
+  public static init(...args: any[]) {
     if (this.isExists) {
       if (this.get().isSameArgs(args)) {
         return;

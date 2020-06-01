@@ -15,10 +15,10 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StrictService = void 0;
 var NotInitializedError_1 = require("./NotInitializedError");
-var Service_1 = require("./Service");
+var SingleService_1 = require("./SingleService");
 /**
- * Представляет строгий сервис. Строгий сервис, в отличии от ленивого, требует
- * обязательной инициализации перед попыткой к нему обратиться.
+ * Представляет строгий единичный сервис. Строгий сервис, в отличии от ленивого,
+ * требует обязательной инициализации перед попыткой к нему обратиться.
  */
 var StrictService = /** @class */ (function (_super) {
     __extends(StrictService, _super);
@@ -96,5 +96,5 @@ var StrictService = /** @class */ (function (_super) {
         return true;
     };
     return StrictService;
-}(Service_1.Service));
+}(SingleService_1.SingleService));
 exports.StrictService = StrictService;

@@ -11,6 +11,8 @@
 
   ↳ **ServiceError**
 
+  ↳ [DisposeNotAllowedError](disposenotallowederror.md)
+
   ↳ [UndefinedInstanceError](undefinedinstanceerror.md)
 
   ↳ [NewNotAllowedError](newnotallowederror.md)

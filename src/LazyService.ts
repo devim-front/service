@@ -1,17 +1,17 @@
-import { Service } from './Service';
+import { SingleService } from './SingleService';
 
 /**
- * Представляет "ленивый" сервис. Ленивый сервис не требует инициализации.
- * Непосредственно экземпляр сервиса создаётся во время первого обращения к
- * нему через метод get. Соответственно, конструктор ленивого сервиса не
- * должен иметь параметров.
+ * Представляет "ленивый" единичный сервис. Ленивый сервис не требует
+ * инициализации. Непосредственно экземпляр сервиса создаётся во время первого
+ * обращения к нему через метод get. Соответственно, конструктор ленивого
+ * сервиса не должен иметь параметров.
  */
-export class LazyService extends Service {
+export class LazyService extends SingleService {
   /**
    * Возвращает экземпляр сервиса. Если экземпляр сервиса ещё не был создан,
    * создаёт его.
    */
-  public static get<T extends typeof LazyService>(this: T) {
+  public static get<T extends typeof SingleService>(this: T) {
     if (!this.isExists) {
       this.create();
     }

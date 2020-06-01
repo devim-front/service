@@ -2,12 +2,12 @@
 
 # Class: StrictService
 
-Представляет строгий сервис. Строгий сервис, в отличии от ленивого, требует
-обязательной инициализации перед попыткой к нему обратиться.
+Представляет строгий единичный сервис. Строгий сервис, в отличии от ленивого,
+требует обязательной инициализации перед попыткой к нему обратиться.
 
 ## Hierarchy
 
-* [Service](service.md)
+  ↳ [SingleService](singleservice.md)
 
   ↳ **StrictService**
 
@@ -27,7 +27,8 @@
 
 ### Methods
 
-* [dispose](strictservice.md#markdown-header-protected-dispose)
+* [dispose](strictservice.md#markdown-header-dispose)
+* [create](strictservice.md#markdown-header-static-protected-create)
 * [delete](strictservice.md#markdown-header-static-delete)
 * [get](strictservice.md#markdown-header-static-get)
 * [init](strictservice.md#markdown-header-static-init)
@@ -38,7 +39,7 @@
 
 \+ **new StrictService**(...`args`: any[]): *[StrictService](strictservice.md)*
 
-*Overrides [Service](service.md).[constructor](service.md#markdown-header-constructor)*
+*Overrides [SingleService](singleservice.md).[constructor](singleservice.md#markdown-header-constructor)*
 
 Создает экземпляр сервиса. Получить созданный экземпляр можно с помощью
 статического метода get, вызов конструктора напрямую приводит к ошибке.
@@ -57,7 +58,7 @@ Name | Type | Description |
 
 ▪ **instance**: *any*
 
-*Inherited from [Service](service.md).[instance](service.md#markdown-header-static-protected-instance)*
+*Inherited from [SingleService](singleservice.md).[instance](singleservice.md#markdown-header-static-protected-instance)*
 
 Экземпляр сервиса.
 
@@ -67,7 +68,7 @@ Name | Type | Description |
 
 • **get isExists**(): *boolean*
 
-*Inherited from [Service](service.md).[isExists](service.md#markdown-header-static-protected-isexists)*
+*Inherited from [SingleService](singleservice.md).[isExists](singleservice.md#markdown-header-static-protected-isexists)*
 
 Указывает, что экземпляр данного класса уже был создан.
 
@@ -75,14 +76,41 @@ Name | Type | Description |
 
 ## Methods
 
-### <a id="markdown-header-protected-dispose" name="markdown-header-protected-dispose"></a> `Protected` dispose
+### <a id="markdown-header-dispose" name="markdown-header-dispose"></a>  dispose
 
 ▸ **dispose**(): *void*
 
-*Inherited from [Service](service.md).[dispose](service.md#markdown-header-protected-dispose)*
+*Inherited from [SingleService](singleservice.md).[dispose](singleservice.md#markdown-header-dispose)*
+
+*Overrides [Service](service.md).[dispose](service.md#markdown-header-dispose)*
 
 Освобождает все занятые экземпляром сервиса ресурсы, подготавливая его к
-удалению.
+удалению. Для строго или ленивого сервиса прямой вызов этого метода
+запрещён и приведет к ошибке, поскольку это может создать неоднозначность
+в коде. Используйте вместо него статический метод delete.
+
+**Returns:** *void*
+
+___
+
+### <a id="markdown-header-static-protected-create" name="markdown-header-static-protected-create"></a> `Static` `Protected` create
+
+▸ **create**<**T**>(...`args`: ConstructorParameters‹T›): *void*
+
+*Inherited from [SingleService](singleservice.md).[create](singleservice.md#markdown-header-static-protected-create)*
+
+Создает экземпляр сервиса и сохраняет его. Для создания экземпляра класса
+следует использовать именно его; вызов оператора new приводит к ошибке.
+
+**Type parameters:**
+
+▪ **T**: *typeof SingleService*
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`...args` | ConstructorParameters‹T› | Аргументы конструктора.  |
 
 **Returns:** *void*
 
@@ -92,7 +120,7 @@ ___
 
 ▸ **delete**(): *void*
 
-*Inherited from [Service](service.md).[delete](service.md#markdown-header-static-delete)*
+*Inherited from [SingleService](singleservice.md).[delete](singleservice.md#markdown-header-static-delete)*
 
 Удаляет существующий экземпляр сервиса, освобождая все занятые им ресурсы.
 
@@ -104,14 +132,14 @@ ___
 
 ▸ **get**<**T**>(`this`: T)
 
-*Overrides [Service](service.md).[get](service.md#markdown-header-static-get)*
+*Overrides [SingleService](singleservice.md).[get](singleservice.md#markdown-header-static-get)*
 
 Возвращает экземпляр сервиса. Если сервис ещё не был инициализирован
 методом init, вызов get приведёт к ошибке.
 
 **Type parameters:**
 
-▪ **T**: *typeof Service*
+▪ **T**: *typeof SingleService*
 
 **Parameters:**
 
@@ -123,9 +151,9 @@ ___
 
 ### <a id="markdown-header-static-init" name="markdown-header-static-init"></a> `Static` init
 
-▸ **init**<**T**>(...`args`: ConstructorParameters‹T›): *void*
+▸ **init**(...`args`: any[]): *void*
 
-*Overrides [Service](service.md).[init](service.md#markdown-header-static-init)*
+*Overrides [SingleService](singleservice.md).[init](singleservice.md#markdown-header-static-init)*
 
 Инициализирует экземпляр сервиса. Аргументы, указанные при вызове, будут
 переданы в конструктор класса. Если вызвать метод инициализации повторно с
@@ -135,14 +163,10 @@ ___
 пересоздать сервис с теми же аргументами, используйте метод delete, а
 уж затем init.
 
-**Type parameters:**
-
-▪ **T**: *typeof StrictService*
-
 **Parameters:**
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`...args` | ConstructorParameters‹T› | Аргументы, которые будут переданы в конструктор.  |
+`...args` | any[] | Аргументы, которые будут переданы в конструктор.  |
 
 **Returns:** *void*
