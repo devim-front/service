@@ -1,4 +1,4 @@
-import { ServiceEvents } from 'ServiceEvents';
+import { ServiceEvents } from './ServiceEvents';
 
 /**
  * Коллекция событий ленивого сервиса.

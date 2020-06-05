@@ -1,4 +1,4 @@
-import { SingleServiceEvents } from 'SingleServiceEvents';
+import { SingleServiceEvents } from './SingleServiceEvents';
 
 /**
  * Коллекция событий строго сервиса.
