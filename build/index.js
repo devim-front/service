@@ -11,10 +11,15 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./Service"), exports);
+__exportStar(require("./ServiceEvents"), exports);
 __exportStar(require("./SingleService"), exports);
+__exportStar(require("./SingleServiceEvents"), exports);
 __exportStar(require("./FreeService"), exports);
+__exportStar(require("./FreeServiceEvents"), exports);
 __exportStar(require("./LazyService"), exports);
+__exportStar(require("./LazyServiceEvents"), exports);
 __exportStar(require("./StrictService"), exports);
+__exportStar(require("./StrictServiceEvents"), exports);
 __exportStar(require("./NewNotAllowedError"), exports);
 __exportStar(require("./DisposeNotAllowedError"), exports);
 __exportStar(require("./NotInitializedError"), exports);
