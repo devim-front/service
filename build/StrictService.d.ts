@@ -1,9 +1,14 @@
 import { SingleService } from './SingleService';
+import { Events } from './Events';
+import { StrictServiceEvents } from './StrictServiceEvents';
 /**
  * Представляет строгий единичный сервис. Строгий сервис, в отличии от ленивого,
  * требует обязательной инициализации перед попыткой к нему обратиться.
+ *
+ * @template E Коллекция событий строгого сервиса. Все пользовательские
+ * коллекция следует наследовать от интерфейса StrictServiceEvents.
  */
-export declare class StrictService extends SingleService {
+export declare class StrictService<E extends Events = StrictServiceEvents> extends SingleService<E> {
     /**
      * Возвращает экземпляр сервиса. Если сервис ещё не был инициализирован
      * методом init, вызов get приведёт к ошибке.

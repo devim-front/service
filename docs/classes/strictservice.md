@@ -1,13 +1,20 @@
 [@devim-front/service](../README.md) › [StrictService](strictservice.md)
 
-# Class: StrictService
+# Class: StrictService <**E**>
 
 Представляет строгий единичный сервис. Строгий сервис, в отличии от ленивого,
 требует обязательной инициализации перед попыткой к нему обратиться.
 
+## Type parameters
+
+▪ **E**: *[Events](../README.md#markdown-header-events)*
+
+Коллекция событий строгого сервиса. Все пользовательские
+коллекция следует наследовать от интерфейса StrictServiceEvents.
+
 ## Hierarchy
 
-  ↳ [SingleService](singleservice.md)
+  ↳ [SingleService](singleservice.md)‹E›
 
   ↳ **StrictService**
 
@@ -28,6 +35,9 @@
 ### Methods
 
 * [dispose](strictservice.md#markdown-header-dispose)
+* [emit](strictservice.md#markdown-header-protected-emit)
+* [off](strictservice.md#markdown-header-off)
+* [on](strictservice.md#markdown-header-on)
 * [create](strictservice.md#markdown-header-static-protected-create)
 * [delete](strictservice.md#markdown-header-static-delete)
 * [get](strictservice.md#markdown-header-static-get)
@@ -88,6 +98,75 @@ Name | Type | Description |
 удалению. Для строго или ленивого сервиса прямой вызов этого метода
 запрещён и приведет к ошибке, поскольку это может создать неоднозначность
 в коде. Используйте вместо него статический метод delete.
+
+**Returns:** *void*
+
+___
+
+### <a id="markdown-header-protected-emit" name="markdown-header-protected-emit"></a> `Protected` emit
+
+▸ **emit**<**T**>(`event`: T, ...`args`: Parameters‹E[T]›): *void*
+
+*Inherited from [Service](service.md).[emit](service.md#markdown-header-protected-emit)*
+
+Вызывает указанное событие, передавая аргументы в его обработчики.
+
+**Type parameters:**
+
+▪ **T**: *keyof E*
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`event` | T | Событие. |
+`...args` | Parameters‹E[T]› | Аргументы, передаваемые в обработчики.  |
+
+**Returns:** *void*
+
+___
+
+### <a id="markdown-header-off" name="markdown-header-off"></a>  off
+
+▸ **off**<**T**>(`event`: T, `handler`: E[T]): *void*
+
+*Inherited from [Service](service.md).[off](service.md#markdown-header-off)*
+
+Удаляет указанный обработчик события.
+
+**Type parameters:**
+
+▪ **T**: *keyof E*
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`event` | T | Событие. |
+`handler` | E[T] | Обработчик.  |
+
+**Returns:** *void*
+
+___
+
+### <a id="markdown-header-on" name="markdown-header-on"></a>  on
+
+▸ **on**<**T**>(`event`: T, `handler`: E[T]): *void*
+
+*Inherited from [Service](service.md).[on](service.md#markdown-header-on)*
+
+Добавляет обработчик указанному событию.
+
+**Type parameters:**
+
+▪ **T**: *keyof E*
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`event` | T | Событие. |
+`handler` | E[T] | Обработчик.  |
 
 **Returns:** *void*
 

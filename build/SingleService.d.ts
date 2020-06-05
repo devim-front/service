@@ -1,11 +1,16 @@
 import { Service } from './Service';
+import { Events } from './Events';
+import { SingleServiceEvents } from './SingleServiceEvents';
 /**
  * Представляет единичный сервис или сервис-синглтон. Данный тип сервиса
  * запрещает прямые вызовы метода dispose и создание экземпляров через
  * оператор new, предоставляя взамен специальные статические методы delete и
  * init.
+ *
+ * @template E Коллекция событий сервиса. Собственные коллекции следует
+ * наследовать от интерфейса SingleServiceEvents.
  */
-export declare class SingleService extends Service {
+export declare class SingleService<E extends Events = SingleServiceEvents> extends Service<E> {
     /**
      * Экземпляр сервиса.
      */

@@ -22,7 +22,7 @@ describe('SingleService', () => {
       }
     };
 
-  const makeNestedService = <T extends typeof SingleService>(service: T) =>
+  const makeNestedService = (service: any) =>
     class NestedService extends service {};
 
   describe('get', () => {

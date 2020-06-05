@@ -4,7 +4,7 @@ import { LazyService } from './LazyService';
 
 describe('LazyService', () => {
   const makeService = () => class CustomService extends LazyService {};
-  const makeNestedService = <T extends typeof LazyService>(service: T) =>
+  const makeNestedService = (service: any) =>
     class NestedService extends service {};
 
   describe('get', () => {

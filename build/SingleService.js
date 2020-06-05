@@ -30,6 +30,9 @@ var Service_1 = require("./Service");
  * запрещает прямые вызовы метода dispose и создание экземпляров через
  * оператор new, предоставляя взамен специальные статические методы delete и
  * init.
+ *
+ * @template E Коллекция событий сервиса. Собственные коллекции следует
+ * наследовать от интерфейса SingleServiceEvents.
  */
 var SingleService = /** @class */ (function (_super) {
     __extends(SingleService, _super);

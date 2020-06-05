@@ -19,6 +19,9 @@ var SingleService_1 = require("./SingleService");
 /**
  * Представляет строгий единичный сервис. Строгий сервис, в отличии от ленивого,
  * требует обязательной инициализации перед попыткой к нему обратиться.
+ *
+ * @template E Коллекция событий строгого сервиса. Все пользовательские
+ * коллекция следует наследовать от интерфейса StrictServiceEvents.
  */
 var StrictService = /** @class */ (function (_super) {
     __extends(StrictService, _super);
