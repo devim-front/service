@@ -18,13 +18,11 @@ npm i -S @devim-front/service
 
 Сервис - это класс, содержащий методы для работы с какой-либо логической сущностью, способный иметь промежуточное состояние.
 
-Что такое сервис, проще всего объяснить, сравнивая его с хэлпером. Напомним, хэлпер - это статический класс, содержащий функционально чистые методы, предназначенные для работы с какой-либо одной логической сущностью (дата, денежная сумма, телефон и тому подобное). Но, если вдруг потребуется сохранить внутри класса некое промежуточное состояние (например, объявить статическое свойство), использовать хэлпер для этой цели уже нельзя, поскольку тогда методы потеряют функциональную чистоту. В этом случае вместо хэлпера стоит использовать сервис.
+Что такое сервис, проще всего объяснить, сравнивая его с [хэлпером](https://github.com/devim-front/helper). Напомним, хэлпер - это статический класс, содержащий функционально чистые методы, предназначенные для работы с какой-либо одной логической сущностью (дата, денежная сумма, телефон и тому подобное). Но, если вдруг потребуется сохранить внутри класса некое промежуточное состояние (например, объявить статическое свойство), использовать хэлпер для этой цели уже нельзя, поскольку тогда методы потеряют функциональную чистоту. В этом случае вместо хэлпера стоит использовать сервис.
 
-Кстати, следует помнить, что из хэлперов нельзя обращаться к сервисам и всем унаследованным от сервисов классам, поскольку это нарушает функциональную чистоту метода.
+Поскольку сервис хранит своё промежуточное состояние - раз, - и, два, зависит от других сервисов, простое удаление экземпляра его класса чревато побочными эффектами и утечками памяти. Чтобы решить эту проблему, у каждого сервиса есть метод [dispose](https://github.com/devim-front/service/blob/master/docs/classes/service.md#markdown-header-dispose), который следует вызвать перед уничтожением экземпляра. При написании собственного сервиса в этом методе следует освободить все ресурсы занятые ресурсы, отписаться ото всех событий и вызвать методы `dispose` у всех вложенных экземпляров, если такие есть.
 
-Поскольку сервис хранит своё промежуточное состояние - раз, - и, два, зависит от других сервисов, простое удаление экземпляра его класса чревато побочными эффектами и утечками памяти. Чтобы решить эту проблему, у каждого сервиса есть метод `dispose`, который следует вызвать перед уничтожением экземпляра. При написании собственного сервиса в этом методе следует освободить все ресурсы занятые ресурсы, отписаться ото всех событий и вызвать методы `dispose` у всех вложенных экземпляров, если такие есть.
-
-Чтобы один сервис мог реагировать на изменение состояния другого сервиса, используется механизм событий. У каждого экземпляра есть методы [on](https://nodejs.org/api/events.html#events_emitter_on_eventname_listener), [off](https://nodejs.org/api/events.html#events_emitter_off_eventname_listener) и [emit](https://nodejs.org/api/events.html#events_emitter_emit_eventname_args), полностью аналогичные соответствующим методам класса [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter) из API NodeJS. По умолчанию сервис умеет генерировать лишь событие `dispose`, уведомляющее, что экземпляр сервиса готовится к удалению. Сам же метод `dispose` удаляет все подписавшиеся на экземпляр обработчики, поэтому не нужно каждый раз делать этого вручную.
+Чтобы один сервис мог реагировать на изменение состояния другого сервиса, используется механизм событий. У каждого экземпляра есть методы [on](https://github.com/devim-front/service/blob/master/docs/classes/service.md#--on), [off](https://github.com/devim-front/service/blob/master/docs/classes/service.md#--off) и [emit](https://github.com/devim-front/service/blob/master/docs/classes/service.md#-protected-emit), полностью аналогичные соответствующим методам класса [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter) из API NodeJS. По умолчанию сервис умеет генерировать лишь событие `dispose`, уведомляющее, что экземпляр сервиса готовится к удалению. Сам же метод `dispose` удаляет все подписавшиеся на экземпляр обработчики, поэтому не нужно каждый раз делать этого вручную.
 
 Глобально сервисы делятся на два типа: _свободные_ и _одиночные_.
 
@@ -38,11 +36,11 @@ npm i -S @devim-front/service
 
 Единичный сервис - это сервис, у которого может быть не более одного экземпляра. Архитектурно это реализуется с помощью паттерна "синглтон". В проектах чаще всего встречается именно этот тип сервисов, поскольку на front-end почти все логические сущности существует лишь в единственном числе.
 
-Единичный сервис требует инициализации, то есть создания экземпляра класса. Инициализация производится с помощью статического метода `init`, который пробрасывает переданные аргументы в конструктор класса. Явный вызов конструктора единичного сервиса запрещён и приводит к ошибке.
+Единичный сервис требует инициализации, то есть создания экземпляра класса. Инициализация производится с помощью статического метода [init](https://github.com/devim-front/service/blob/master/docs/classes/singleservice.md#-static-init), который пробрасывает переданные аргументы в конструктор класса. Явный вызов конструктора единичного сервиса запрещён и приводит к ошибке.
 
-Также единичный сервис позволяет удалить свой экземпляр с помощью статического метода `delete`. Это приведет к тому, что у экземпляра сервиса будет вызван метод `dispose`, а затем он будет удалён. Чтобы избежать неоднозначности в коде, вызов метода `dispose` вручную запрещён и приведет к ошибке.
+Также единичный сервис позволяет удалить свой экземпляр с помощью статического метода [delete](https://github.com/devim-front/service/blob/master/docs/classes/singleservice.md#-static-delete). Это приведет к тому, что у экземпляра сервиса будет вызван метод `dispose`, а затем он будет удалён. Чтобы избежать неоднозначности в коде, вызов метода `dispose` вручную запрещён и приведет к ошибке.
 
-Получить экземпляр единичного сервиса можно статическим методом `get`. Возникает вопрос, что произойдет, если вызвать метод до того, как экземпляр синглтона будет создан? По поведению в этой ситуации единичные сервисы разделяются ещё на две группы: _строгие_ и _ленивые_.
+Получить экземпляр единичного сервиса можно статическим методом [get](https://github.com/devim-front/service/blob/master/docs/classes/singleservice.md#-static-get). Возникает вопрос, что произойдет, если вызвать метод до того, как экземпляр синглтона будет создан? По поведению в этой ситуации единичные сервисы разделяются ещё на две группы: _строгие_ и _ленивые_.
 
 В библиотеке единичный сервис представлен классом [SingleService](https://github.com/devim-front/service/blob/master/docs/classes/singleservice.md).
 
@@ -75,13 +73,15 @@ import { LazyService } from '@devim-front/service';
 export class ErrorService extends LazyService {}
 ```
 
-Добавляем в сервис обработчики исключений для браузера и для NodeJS (код перехвата необработанных исключений в браузере сокращен ради упрощения примера; реальный код должен использовать более сложный полифилл):
+Добавляем в сервис обработчики исключений для браузера и для NodeJS (код перехвата необработанных исключений в браузере сокращен для упрощения; реальный код должен использовать более сложный полифилл):
 
 ```typescript
 // ErrorService.ts
 import { LazyService } from '@devim-front/service';
 
 export class ErrorService extends LazyService {
+  private nativeOnError: Function;
+
   private handleError = (error: Error) => {};
 
   public constructor() {
@@ -92,7 +92,46 @@ export class ErrorService extends LazyService {
       return this;
     }
 
-    const nativeOnError = window.onerror;
+    this.nativeOnError = window.onerror;
+    const self = this;
+
+    window.onerror = function (
+      message: string,
+      url: string,
+      line: number,
+      column: number,
+      error?: Error
+    ) {
+      if (error != null) {
+        self.handleError(error);
+      }
+
+      return self.nativeOnError.apply(this, arguments);
+    };
+  }
+}
+```
+
+Далее, если сервис будет удалён, следует вернуть среду выполнения к первоначальному стоянию:
+
+```typescript
+// ErrorService.ts
+import { LazyService } from '@devim-front/service';
+
+export class ErrorService extends LazyService {
+  private nativeOnError: Function;
+
+  private handleError = (error: Error) => {};
+
+  public constructor() {
+    super();
+
+    if (typeof window === 'undefined') {
+      process.on('uncaughtException', this.handleError);
+      return this;
+    }
+
+    this.nativeOnError = window.onerror;
     const self = this;
 
     window.onerror = function (
@@ -109,6 +148,17 @@ export class ErrorService extends LazyService {
       return nativeOnError.apply(this, arguments);
     };
   }
+
+  public dispose() {
+    super.dispose();
+
+    if (typeof window === 'undefined') {
+      process.off('uncaughtException', this.handleError);
+      return;
+    }
+
+    window.onerror = this.nativeOnError;
+  }
 }
 ```
 
@@ -123,6 +173,8 @@ interface Events extends LazyServiceEvents {
 }
 
 export class ErrorService extends LazyService<Events> {
+  private nativeOnError: Function;
+
   private handleError = (error: Error) => {
     this.emit('error', error);
   };
@@ -135,7 +187,7 @@ export class ErrorService extends LazyService<Events> {
       return this;
     }
 
-    const nativeOnError = window.onerror;
+    this.nativeOnError = window.onerror;
     const self = this;
 
     window.onerror = function (
@@ -151,6 +203,17 @@ export class ErrorService extends LazyService<Events> {
 
       return nativeOnError.apply(this, arguments);
     };
+  }
+
+  public dispose() {
+    super.dispose();
+
+    if (typeof window === 'undefined') {
+      process.off('uncaughtException', this.handleError);
+      return;
+    }
+
+    window.onerror = this.nativeOnError;
   }
 }
 ```
