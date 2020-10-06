@@ -52,6 +52,7 @@
   },
   "homepage": "https://github.com/devim-front/service#readme",
   "dependencies": {
+    "@devim-front/error": "^1.1.4",
     "@types/events": "^3.0.0",
     "events": "^3.1.0"
   }

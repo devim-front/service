@@ -1,4 +1,4 @@
-import { ServiceError } from './ServiceError';
+import { NotImplementedError } from '@devim-front/error';
 /**
  * Возникает, когда в базовом классе Service происходит попытка получить
  * экземпляр сервиса до его создания. Классы-наследники решают эту проблему
@@ -7,9 +7,17 @@ import { ServiceError } from './ServiceError';
  * Если вы наследуете свои классы от Service напрямую, вы должны решить эту
  * проблему самостоятельно.
  */
-export declare class UndefinedInstanceError extends ServiceError {
+export declare class UndefinedInstanceError extends NotImplementedError {
+    /**
+     * Возвращает сообщение об ошибке.
+     *
+     * @param type Класс сервиса.
+     */
+    private static getMessage;
     /**
      * Создает экземпляр ошибки.
+     *
+     * @param type Класс сервиса, который сгенерировал исключение.
      */
-    constructor();
+    constructor(type: Function);
 }

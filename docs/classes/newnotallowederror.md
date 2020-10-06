@@ -7,7 +7,7 @@
 
 ## Hierarchy
 
-  ↳ [ServiceError](serviceerror.md)
+* NotSupportedError
 
   ↳ **NewNotAllowedError**
 
@@ -21,10 +21,16 @@
 
 ### <a id="markdown-header-constructor" name="markdown-header-constructor"></a>  constructor
 
-\+ **new NewNotAllowedError**(): *[NewNotAllowedError](newnotallowederror.md)*
+\+ **new NewNotAllowedError**(`type`: Function): *[NewNotAllowedError](newnotallowederror.md)*
 
-*Overrides [ServiceError](serviceerror.md).[constructor](serviceerror.md#markdown-header-constructor)*
+*Overrides void*
 
 Создает экземпляр ошибки.
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`type` | Function | Класс сервиса, сгенерировавшего исключение.  |
 
 **Returns:** *[NewNotAllowedError](newnotallowederror.md)*

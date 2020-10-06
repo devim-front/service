@@ -42,7 +42,7 @@ export class SingleService<
    */
   public static get<T extends typeof SingleService>(this: T) {
     if (!this.isExists) {
-      throw new UndefinedInstanceError();
+      throw new UndefinedInstanceError(this);
     }
 
     return this.instance as InstanceType<T>;
@@ -104,7 +104,7 @@ export class SingleService<
     const type = this.constructor as typeof SingleService;
 
     if (!type.isCreate) {
-      throw new NewNotAllowedError();
+      throw new NewNotAllowedError(this.constructor);
     }
 
     type.isCreate = false;
@@ -124,7 +124,7 @@ export class SingleService<
    */
   public dispose() {
     if (!this.isDelete) {
-      throw new DisposeNotAllowedError();
+      throw new DisposeNotAllowedError(this.constructor);
     }
 
     this.isDelete = false;

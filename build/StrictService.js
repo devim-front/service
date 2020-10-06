@@ -52,7 +52,7 @@ var StrictService = /** @class */ (function (_super) {
         if (this.isExists) {
             return this.instance;
         }
-        throw new NotInitializedError_1.NotInitializedError(this.name);
+        throw new NotInitializedError_1.NotInitializedError(this);
     };
     /**
      * Инициализирует экземпляр сервиса. Аргументы, указанные при вызове, будут

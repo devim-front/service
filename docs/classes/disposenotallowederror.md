@@ -7,7 +7,7 @@
 
 ## Hierarchy
 
-  ↳ [ServiceError](serviceerror.md)
+* NotSupportedError
 
   ↳ **DisposeNotAllowedError**
 
@@ -21,10 +21,16 @@
 
 ### <a id="markdown-header-constructor" name="markdown-header-constructor"></a>  constructor
 
-\+ **new DisposeNotAllowedError**(): *[DisposeNotAllowedError](disposenotallowederror.md)*
+\+ **new DisposeNotAllowedError**(`type`: Function): *[DisposeNotAllowedError](disposenotallowederror.md)*
 
-*Overrides [ServiceError](serviceerror.md).[constructor](serviceerror.md#markdown-header-constructor)*
+*Overrides void*
 
 Создает экземпляр ошибки.
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`type` | Function | Класс сервиса, сгенерировавший исключение.  |
 
 **Returns:** *[DisposeNotAllowedError](disposenotallowederror.md)*

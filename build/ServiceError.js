@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServiceError = void 0;
+var error_1 = require("@devim-front/error");
 /**
  * Возникает, когда произошла ошибка при использовании базовых механик сервиса.
  * Наследовать от этого класса собственные исключения не нужно.
@@ -26,10 +27,8 @@ var ServiceError = /** @class */ (function (_super) {
      * @param message Сообщение об ошибке.
      */
     function ServiceError(message) {
-        var _this = _super.call(this, message) || this;
-        _this.name = 'ServiceError';
-        return _this;
+        return _super.call(this, 'ServiceError', message) || this;
     }
     return ServiceError;
-}(Error));
+}(error_1.CustomError));
 exports.ServiceError = ServiceError;

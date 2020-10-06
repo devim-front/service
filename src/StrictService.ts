@@ -22,7 +22,7 @@ export class StrictService<
       return this.instance as InstanceType<T>;
     }
 
-    throw new NotInitializedError(this.name);
+    throw new NotInitializedError(this);
   }
 
   /**

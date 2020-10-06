@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UndefinedInstanceError = void 0;
-var ServiceError_1 = require("./ServiceError");
+var error_1 = require("@devim-front/error");
 /**
  * Возникает, когда в базовом классе Service происходит попытка получить
  * экземпляр сервиса до его создания. Классы-наследники решают эту проблему
@@ -27,10 +27,24 @@ var UndefinedInstanceError = /** @class */ (function (_super) {
     __extends(UndefinedInstanceError, _super);
     /**
      * Создает экземпляр ошибки.
+     *
+     * @param type Класс сервиса, который сгенерировал исключение.
      */
-    function UndefinedInstanceError() {
-        return _super.call(this, "Cannot get an instance because 'Service.instance' is not undefined. Please resolve this issue in a nested class.") || this;
+    function UndefinedInstanceError(type) {
+        var _this = this;
+        var message = UndefinedInstanceError.getMessage(type);
+        _this = _super.call(this, message) || this;
+        return _this;
     }
+    /**
+     * Возвращает сообщение об ошибке.
+     *
+     * @param type Класс сервиса.
+     */
+    UndefinedInstanceError.getMessage = function (type) {
+        var _a = type.name, name = _a === void 0 ? 'SingleService' : _a;
+        return "Cannot get an instance because " + name + ".instance is not undefined. Please resolve this issue in a nested class.";
+    };
     return UndefinedInstanceError;
-}(ServiceError_1.ServiceError));
+}(error_1.NotImplementedError));
 exports.UndefinedInstanceError = UndefinedInstanceError;

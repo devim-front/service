@@ -11,7 +11,7 @@
 
 ## Hierarchy
 
-  ↳ [ServiceError](serviceerror.md)
+* NotImplementedError
 
   ↳ **UndefinedInstanceError**
 
@@ -25,10 +25,16 @@
 
 ### <a id="markdown-header-constructor" name="markdown-header-constructor"></a>  constructor
 
-\+ **new UndefinedInstanceError**(): *[UndefinedInstanceError](undefinedinstanceerror.md)*
+\+ **new UndefinedInstanceError**(`type`: Function): *[UndefinedInstanceError](undefinedinstanceerror.md)*
 
-*Overrides [ServiceError](serviceerror.md).[constructor](serviceerror.md#markdown-header-constructor)*
+*Overrides void*
 
 Создает экземпляр ошибки.
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`type` | Function | Класс сервиса, который сгенерировал исключение.  |
 
 **Returns:** *[UndefinedInstanceError](undefinedinstanceerror.md)*

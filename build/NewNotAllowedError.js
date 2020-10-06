@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NewNotAllowedError = void 0;
-var ServiceError_1 = require("./ServiceError");
+var error_1 = require("@devim-front/error");
 /**
  * Возникает, когда в коде происходит создание экземпляра сервиса через
  * оператор 'new'.
@@ -23,10 +23,24 @@ var NewNotAllowedError = /** @class */ (function (_super) {
     __extends(NewNotAllowedError, _super);
     /**
      * Создает экземпляр ошибки.
+     *
+     * @param type Класс сервиса, сгенерировавшего исключение.
      */
-    function NewNotAllowedError() {
-        return _super.call(this, "It's not allowed to create a service's instance by 'new' operator. Use Service.get() instead.") || this;
+    function NewNotAllowedError(type) {
+        var _this = this;
+        var message = NewNotAllowedError.getMessage(type);
+        _this = _super.call(this, message) || this;
+        return _this;
     }
+    /**
+     * Возвращает сообщение об ошибке.
+     *
+     * @param type Класс сервиса.
+     */
+    NewNotAllowedError.getMessage = function (type) {
+        var name = type.name;
+        return "It's not allowed to use a \"new\" operator. Use " + name + ".get() instead.";
+    };
     return NewNotAllowedError;
-}(ServiceError_1.ServiceError));
+}(error_1.NotSupportedError));
 exports.NewNotAllowedError = NewNotAllowedError;

@@ -21,16 +21,16 @@
 
 ### <a id="markdown-header-constructor" name="markdown-header-constructor"></a>  constructor
 
-\+ **new NotInitializedError**(`name`: string): *[NotInitializedError](notinitializederror.md)*
+\+ **new NotInitializedError**(`type`: Function): *[NotInitializedError](notinitializederror.md)*
 
 *Overrides [ServiceError](serviceerror.md).[constructor](serviceerror.md#markdown-header-constructor)*
 
-Создает экземпляр ошибки для сервиса с указанным именем.
+Создает экземпляр ошибки.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`name` | string |
+Name | Type | Description |
+------ | ------ | ------ |
+`type` | Function | Класс сервиса, сгенерировавшего исключение.  |
 
 **Returns:** *[NotInitializedError](notinitializederror.md)*

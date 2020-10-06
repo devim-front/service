@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DisposeNotAllowedError = void 0;
-var ServiceError_1 = require("./ServiceError");
+var error_1 = require("@devim-front/error");
 /**
  * Возникает, когда в коде происходит попытка прямого вызова метода dispose у
  * экземпляра сервиса-синглтона.
@@ -23,10 +23,24 @@ var DisposeNotAllowedError = /** @class */ (function (_super) {
     __extends(DisposeNotAllowedError, _super);
     /**
      * Создает экземпляр ошибки.
+     *
+     * @param type Класс сервиса, сгенерировавший исключение.
      */
-    function DisposeNotAllowedError() {
-        return _super.call(this, "It's not allowed to call dispose() method. Use Service.delete() instead.") || this;
+    function DisposeNotAllowedError(type) {
+        var _this = this;
+        var message = DisposeNotAllowedError.getMessage(type);
+        _this = _super.call(this, message) || this;
+        return _this;
     }
+    /**
+     * Возвращает сообщение об ошибке.
+     *
+     * @param type Класс сервиса.
+     */
+    DisposeNotAllowedError.getMessage = function (type) {
+        var _a = type.name, name = _a === void 0 ? 'SingleService' : _a;
+        return "It's not allowed to call dispose() method directly. Use " + name + ".delete() instead.";
+    };
     return DisposeNotAllowedError;
-}(ServiceError_1.ServiceError));
+}(error_1.NotSupportedError));
 exports.DisposeNotAllowedError = DisposeNotAllowedError;
