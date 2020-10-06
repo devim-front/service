@@ -50,7 +50,7 @@ var SingleService = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         var type = _this.constructor;
         if (!type.isCreate) {
-            throw new NewNotAllowedError_1.NewNotAllowedError();
+            throw new NewNotAllowedError_1.NewNotAllowedError(_this.constructor);
         }
         type.isCreate = false;
         return _this;
@@ -72,7 +72,7 @@ var SingleService = /** @class */ (function (_super) {
      */
     SingleService.get = function () {
         if (!this.isExists) {
-            throw new UndefinedInstanceError_1.UndefinedInstanceError();
+            throw new UndefinedInstanceError_1.UndefinedInstanceError(this);
         }
         return this.instance;
     };
@@ -127,7 +127,7 @@ var SingleService = /** @class */ (function (_super) {
      */
     SingleService.prototype.dispose = function () {
         if (!this.isDelete) {
-            throw new DisposeNotAllowedError_1.DisposeNotAllowedError();
+            throw new DisposeNotAllowedError_1.DisposeNotAllowedError(this.constructor);
         }
         this.isDelete = false;
         _super.prototype.dispose.call(this);

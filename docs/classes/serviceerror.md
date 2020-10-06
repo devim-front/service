@@ -7,15 +7,9 @@
 
 ## Hierarchy
 
-* Error
+* CustomError
 
   ↳ **ServiceError**
-
-  ↳ [DisposeNotAllowedError](disposenotallowederror.md)
-
-  ↳ [UndefinedInstanceError](undefinedinstanceerror.md)
-
-  ↳ [NewNotAllowedError](newnotallowederror.md)
 
   ↳ [NotInitializedError](notinitializederror.md)
 
@@ -30,6 +24,8 @@
 ### <a id="markdown-header-constructor" name="markdown-header-constructor"></a>  constructor
 
 \+ **new ServiceError**(`message`: string): *[ServiceError](serviceerror.md)*
+
+*Overrides void*
 
 Создает экземпляр класса с указанным сообщением об ошибке.
 

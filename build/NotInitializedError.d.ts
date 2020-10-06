@@ -5,7 +5,15 @@ import { ServiceError } from './ServiceError';
  */
 export declare class NotInitializedError extends ServiceError {
     /**
-     * Создает экземпляр ошибки для сервиса с указанным именем.
+     * Возвращает сообщение об ошибке.
+     *
+     * @param type Класс сервиса.
      */
-    constructor(name: string);
+    private static getMessage;
+    /**
+     * Создает экземпляр ошибки.
+     *
+     * @param type Класс сервиса, сгенерировавшего исключение.
+     */
+    constructor(type: Function);
 }

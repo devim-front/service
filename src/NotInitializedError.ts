@@ -6,11 +6,22 @@ import { ServiceError } from './ServiceError';
  */
 export class NotInitializedError extends ServiceError {
   /**
-   * Создает экземпляр ошибки для сервиса с указанным именем.
+   * Возвращает сообщение об ошибке.
+   *
+   * @param type Класс сервиса.
    */
-  public constructor(name: string) {
-    super(
-      `Service '${name}' is not initialized. Please use method ${name}.init ap application startup.`
-    );
+  private static getMessage(type: Function) {
+    const { name = 'StrictService' } = type;
+    return `Service '${name}' is not initialized. Please use method ${name}.init ap application startup.`;
+  }
+
+  /**
+   * Создает экземпляр ошибки.
+   *
+   * @param type Класс сервиса, сгенерировавшего исключение.
+   */
+  public constructor(type: Function) {
+    const message = NotInitializedError.getMessage(type);
+    super(message);
   }
 }

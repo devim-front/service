@@ -28,7 +28,11 @@ describe('SingleService', () => {
   describe('get', () => {
     it('getting an instance of pristine service throws an error', () => {
       const service = makeService();
-      assert.throw(() => service.get(), new UndefinedInstanceError().message);
+
+      assert.throw(
+        () => service.get(),
+        new UndefinedInstanceError(service).message
+      );
     });
 
     it('getting an instance of initialized service works', () => {
@@ -39,9 +43,14 @@ describe('SingleService', () => {
 
     it('getting an instance of deleted service throws an error', () => {
       const service = makeService();
+
       service.init();
       service.delete();
-      assert.throw(() => service.get(), new UndefinedInstanceError().message);
+
+      assert.throw(
+        () => service.get(),
+        new UndefinedInstanceError(service).message
+      );
     });
 
     it('getting an instance twice gives an equal results', () => {
@@ -55,10 +64,12 @@ describe('SingleService', () => {
     it('getting an instance of subclass throws an error even if an instance of the base class has been created', () => {
       const baseService = makeService();
       const nestedService = makeNestedService(baseService);
+
       baseService.init();
+
       assert.throw(
         () => nestedService.get(),
-        new UndefinedInstanceError().message
+        new UndefinedInstanceError(nestedService).message
       );
     });
   });
@@ -113,16 +124,25 @@ describe('SingleService', () => {
 
     it('call on initialized service deletes an instance', () => {
       const service = makeService();
+
       service.init();
       service.delete();
-      assert.throws(() => service.get(), new UndefinedInstanceError().message);
+
+      assert.throws(
+        () => service.get(),
+        new UndefinedInstanceError(service).message
+      );
     });
   });
 
   describe('constructor', () => {
     it('direct call throws an error', () => {
       const service = makeService();
-      assert.throws(() => new service(), new NewNotAllowedError().message);
+
+      assert.throws(
+        () => new service(),
+        new NewNotAllowedError(service).message
+      );
     });
 
     it('call of the parent constructor inside the child constructor throws an error', () => {
@@ -137,7 +157,7 @@ describe('SingleService', () => {
 
       assert.throws(
         () => NestedService.init(),
-        new NewNotAllowedError().message
+        new NewNotAllowedError(BaseService).message
       );
     });
   });
@@ -145,11 +165,14 @@ describe('SingleService', () => {
   describe('dispose', () => {
     it('direct call throws an error', () => {
       const service = makeService();
+
       service.init();
+
       const instance = service.get();
+
       assert.throws(
         () => instance.dispose(),
-        new DisposeNotAllowedError().message
+        new DisposeNotAllowedError(service).message
       );
     });
   });

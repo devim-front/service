@@ -1,4 +1,4 @@
-import { ServiceError } from './ServiceError';
+import { NotImplementedError } from '@devim-front/error';
 
 /**
  * Возникает, когда в базовом классе Service происходит попытка получить
@@ -8,13 +8,24 @@ import { ServiceError } from './ServiceError';
  * Если вы наследуете свои классы от Service напрямую, вы должны решить эту
  * проблему самостоятельно.
  */
-export class UndefinedInstanceError extends ServiceError {
+export class UndefinedInstanceError extends NotImplementedError {
+  /**
+   * Возвращает сообщение об ошибке.
+   *
+   * @param type Класс сервиса.
+   */
+  private static getMessage(type: Function) {
+    const { name = 'SingleService' } = type;
+    return `Cannot get an instance because ${name}.instance is not undefined. Please resolve this issue in a nested class.`;
+  }
+
   /**
    * Создает экземпляр ошибки.
+   *
+   * @param type Класс сервиса, который сгенерировал исключение.
    */
-  public constructor() {
-    super(
-      "Cannot get an instance because 'Service.instance' is not undefined. Please resolve this issue in a nested class."
-    );
+  public constructor(type: Function) {
+    const message = UndefinedInstanceError.getMessage(type);
+    super(message);
   }
 }
