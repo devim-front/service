@@ -1,5 +1,7 @@
 import './Service.test';
 import './FreeService.test';
-import './SingleService.test';
+import './Context.test';
+import './Pool.test';
+import './Provider.test';
+import './withProvider.test';
 import './LazyService.test';
-import './StrictService.test';

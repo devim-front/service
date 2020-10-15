@@ -6,46 +6,94 @@
 
 ### Classes
 
-* [DisposeNotAllowedError](classes/disposenotallowederror.md)
 * [FreeService](classes/freeservice.md)
 * [LazyService](classes/lazyservice.md)
-* [NewNotAllowedError](classes/newnotallowederror.md)
-* [NotInitializedError](classes/notinitializederror.md)
+* [Pool](classes/pool.md)
+* [Provider](classes/provider.md)
 * [Service](classes/service.md)
-* [ServiceError](classes/serviceerror.md)
-* [SingleService](classes/singleservice.md)
-* [StrictService](classes/strictservice.md)
-* [UndefinedInstanceError](classes/undefinedinstanceerror.md)
-
-### Interfaces
-
-* [FreeServiceEvents](interfaces/freeserviceevents.md)
-* [LazyServiceEvents](interfaces/lazyserviceevents.md)
-* [ServiceEvents](interfaces/serviceevents.md)
-* [SingleServiceEvents](interfaces/singleserviceevents.md)
-* [StrictServiceEvents](interfaces/strictserviceevents.md)
 
 ### Type aliases
 
-* [Events](README.md#markdown-header-events)
+* [Context](README.md#markdown-header-context)
+* [Props](README.md#markdown-header-props)
+
+### Variables
+
+* [DEFAULT](README.md#markdown-header-const-default)
+* [GET_SERVICE](README.md#markdown-header-const-get_service)
+* [SET_SERVICE](README.md#markdown-header-const-set_service)
+* [context](README.md#markdown-header-const-context)
+
+### Functions
+
+* [withProvider](README.md#markdown-header-const-withprovider)
 
 ## Type aliases
 
-### <a id="markdown-header-events" name="markdown-header-events"></a>  Events
+### <a id="markdown-header-context" name="markdown-header-context"></a>  Context
 
-Ƭ **Events**: *object*
+Ƭ **Context**: *object*
 
-Коллекция событий сервиса. Ключом служит тип события, значением -
-сигнатура обработчика события.
+Тип контекста.
 
 #### Type declaration:
 
-* \[ **key**: *string*\]: function
+* **pool**: *[Pool](classes/pool.md)*
 
-▸ (...`args`: any[]): *void*
+___
+
+### <a id="markdown-header-props" name="markdown-header-props"></a>  Props
+
+Ƭ **Props**: *PropsWithChildren‹object›*
+
+Свойства компонента.
+
+## Variables
+
+### <a id="markdown-header-const-default" name="markdown-header-const-default"></a> `Const` DEFAULT
+
+• **DEFAULT**: *unique symbol* = Symbol('DEFAULT')
+
+Свойство, содержащее экземпляр контекста по умолчанию.
+
+___
+
+### <a id="markdown-header-const-get_service" name="markdown-header-const-get_service"></a> `Const` GET_SERVICE
+
+• **GET_SERVICE**: *unique symbol* = Symbol('GET_SERVICE')
+
+Метод, возвращающий экземпляр сервиса.
+
+___
+
+### <a id="markdown-header-const-set_service" name="markdown-header-const-set_service"></a> `Const` SET_SERVICE
+
+• **SET_SERVICE**: *unique symbol* = Symbol('SET_SERVICE')
+
+Метод, задающий экземпляр сервиса.
+
+___
+
+### <a id="markdown-header-const-context" name="markdown-header-const-context"></a> `Const` context
+
+• **context**: *Context‹object›* = createContext<Context>({
+  pool: Pool[DEFAULT],
+})
+
+Контекст сервисов.
+
+## Functions
+
+### <a id="markdown-header-const-withprovider" name="markdown-header-const-withprovider"></a> `Const` withProvider
+
+▸ **withProvider**(`pool?`: [Pool](classes/pool.md)): *(Anonymous function)*
+
+Оборачивает переданный компонент в провайдер ленивых сервисов.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...args` | any[] |
+Name | Type | Description |
+------ | ------ | ------ |
+`pool?` | [Pool](classes/pool.md) | Пул сервисов, который будет использован в провайдере. Если не указан, то будет создан новый пул.  |
+
+**Returns:** *(Anonymous function)*
