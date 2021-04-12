@@ -76,7 +76,7 @@ export class LazyService extends Service {
     this: T,
     context: Pool
   ) {
-    let instance = context[GET_SERVICE](this);
+    let instance = context[GET_SERVICE](this) as InstanceType<T> | undefined;
 
     if (instance == null) {
       instance = new this(context) as InstanceType<T>;

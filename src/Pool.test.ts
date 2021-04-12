@@ -107,5 +107,19 @@ describe('Pool', () => {
 
       assert.sameMembers(disposed, ['ServiceA', 'ServiceB', 'ServiceC']);
     });
+
+    it("should clean up the 'services' collection after all contained services have been disposed", () => {
+      class ServiceA extends LazyService {}
+
+      const pool = new Pool();
+
+      const service = new ServiceA(pool);
+      pool[SET_SERVICE](service);
+
+      pool.dispose();
+      const serviceAInstance = pool[GET_SERVICE](ServiceA);
+
+      assert.isUndefined(serviceAInstance);
+    });
   });
 });
