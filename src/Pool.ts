@@ -75,11 +75,11 @@ export class Pool {
    * @internal
    * @param type Тип класса сервиса.
    */
-  public [GET_SERVICE]<T extends typeof LazyService>(type: T) {
+  public [GET_SERVICE](type: typeof LazyService) {
     const id = Pool.getTypeId(type);
 
     return this.services.has(id)
-      ? (this.services.get(id) as InstanceType<T>)
+      ? this.services.get(id)
       : undefined;
   }
 
@@ -100,5 +100,6 @@ export class Pool {
    */
   public dispose() {
     this.services.forEach((service) => service.dispose());
+    this.services = new Map();
   }
 }
